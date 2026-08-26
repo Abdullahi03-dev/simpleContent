@@ -1,0 +1,1110 @@
+<title>PrepSync Growth Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+
+<style>
+  /* ── Tokens: dark-first (bare :root = dark), light swapped in consistently ── */
+  :root{
+    --bg:#0f1117;
+    --surface:#171a22;
+    --surface-2:#1e222c;
+    --surface-3:#262b37;
+    --border:#2a2f3a;
+    --border-soft:#20242e;
+    --text:#e7e9ef;
+    --text-dim:#9aa0b0;
+    --text-faint:#6b7180;
+    --primary:#3b82f6;
+    --primary-bright:#60a5fa;
+    --primary-soft:rgba(59,130,246,0.14);
+    --green:#10b981;
+    --green-bright:#34d399;
+    --green-soft:rgba(16,185,129,0.13);
+    --amber:#f59e0b;
+    --amber-soft:rgba(245,158,11,0.14);
+    --sky:#38bdf8;
+    --sky-soft:rgba(56,189,248,0.14);
+    --indigo:#818cf8;
+    --indigo-soft:rgba(129,140,248,0.15);
+    --shadow:0 1px 3px rgba(0,0,0,0.4),0 8px 24px rgba(0,0,0,0.28);
+    --ring:0 0 0 3px rgba(59,130,246,0.35);
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --bg:#f4f5fa;
+      --surface:#ffffff;
+      --surface-2:#f1f3f8;
+      --surface-3:#e8ebf2;
+      --border:#e2e5ee;
+      --border-soft:#eceef4;
+      --text:#161922;
+      --text-dim:#565d6e;
+      --text-faint:#8a90a0;
+      --primary:#2563eb;
+      --primary-bright:#1d4ed8;
+      --primary-soft:rgba(37,99,235,0.10);
+      --green:#0a9d63;
+      --green-bright:#0a8f5a;
+      --green-soft:rgba(10,157,99,0.12);
+      --amber:#b26c07;
+      --amber-soft:rgba(178,108,7,0.12);
+      --sky:#0284c7;
+      --sky-soft:rgba(2,132,199,0.10);
+      --indigo:#4f46e5;
+      --indigo-soft:rgba(79,70,229,0.10);
+      --shadow:0 1px 2px rgba(16,24,40,0.06),0 10px 28px rgba(16,24,40,0.08);
+      --ring:0 0 0 3px rgba(37,99,235,0.30);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f4f5fa;
+    --surface:#ffffff;
+    --surface-2:#f1f3f8;
+    --surface-3:#e8ebf2;
+    --border:#e2e5ee;
+    --border-soft:#eceef4;
+    --text:#161922;
+    --text-dim:#565d6e;
+    --text-faint:#8a90a0;
+    --primary:#2563eb;
+    --primary-bright:#1d4ed8;
+    --primary-soft:rgba(37,99,235,0.10);
+    --green:#0a9d63;
+    --green-bright:#0a8f5a;
+    --green-soft:rgba(10,157,99,0.12);
+    --amber:#b26c07;
+    --amber-soft:rgba(178,108,7,0.12);
+    --sky:#0284c7;
+    --sky-soft:rgba(2,132,199,0.10);
+    --indigo:#4f46e5;
+    --indigo-soft:rgba(79,70,229,0.10);
+    --shadow:0 1px 2px rgba(16,24,40,0.06),0 10px 28px rgba(16,24,40,0.08);
+    --ring:0 0 0 3px rgba(37,99,235,0.30);
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;text-wrap:balance;margin:0;letter-spacing:-0.02em;line-height:1.12}
+  p{margin:0}
+  a{color:var(--primary-bright);text-decoration:none}
+  a:hover{text-decoration:underline}
+  ::selection{background:var(--primary);color:#fff}
+  :focus-visible{outline:none;box-shadow:var(--ring);border-radius:8px}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px 72px}
+
+  /* ── Top bar ── */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;gap:16px;
+    padding:14px 20px;margin:0 -20px 8px;
+    background:color-mix(in srgb,var(--bg) 86%,transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-0.03em}
+  .brand svg{display:block}
+  .brand .growth{color:var(--text-faint);font-weight:600}
+  .tabs{display:flex;gap:6px;margin-left:8px;background:var(--surface-2);padding:4px;border-radius:11px;border:1px solid var(--border-soft);overflow-x:auto;max-width:100%;-ms-overflow-style:none;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{
+    font-family:"IBM Plex Sans",sans-serif;font-size:0.86rem;font-weight:600;
+    color:var(--text-dim);background:none;border:none;cursor:pointer;
+    padding:7px 14px;border-radius:8px;white-space:nowrap;transition:color .15s,background .15s;
+  }
+  .tab:hover{color:var(--text)}
+  .tab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,0.25)}
+  .theme-toggle{
+    margin-left:auto;width:38px;height:38px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--surface-2);border:1px solid var(--border);border-radius:10px;
+    color:var(--text-dim);cursor:pointer;transition:color .15s,border-color .15s;
+  }
+  .theme-toggle:hover{color:var(--text);border-color:var(--primary)}
+
+  .view{padding-top:20px}
+  .hidden{display:none}
+
+  /* ── Challenge: dashboard hero ── */
+  .dash-hero{
+    display:flex;gap:28px;align-items:center;flex-wrap:wrap;
+    background:
+      radial-gradient(120% 140% at 100% 0%,var(--primary-soft),transparent 55%),
+      var(--surface);
+    border:1px solid var(--border);border-radius:20px;
+    padding:26px 28px;box-shadow:var(--shadow);
+  }
+  .ring-wrap{position:relative;flex-shrink:0;width:132px;height:132px}
+  .ring-wrap svg{transform:rotate(-90deg)}
+  .ring-track{stroke:var(--surface-3)}
+  .ring-fill{stroke:var(--primary);stroke-linecap:round;transition:stroke-dashoffset .7s cubic-bezier(.4,0,.2,1),stroke .3s}
+  .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+  .ring-center .pct{font-family:"IBM Plex Mono",monospace;font-size:2rem;font-weight:600;letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
+  .ring-center .pct-lbl{font-size:0.66rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--text-faint)}
+  .dash-stats{flex:1;min-width:270px}
+  .eyebrow{display:inline-block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--primary-bright);margin-bottom:9px}
+  .dash-stats h1{font-size:clamp(1.5rem,3.4vw,2.05rem);font-weight:800}
+  .lede{color:var(--text-dim);margin-top:8px;font-size:0.98rem;max-width:52ch}
+  .stat-row{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+  .stat{background:var(--surface-2);border:1px solid var(--border-soft);border-radius:12px;padding:11px 16px;min-width:96px}
+  .stat .num{display:block;font-family:"IBM Plex Mono",monospace;font-size:1.5rem;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+  .stat .lbl{display:block;font-size:0.72rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.08em;margin-top:6px}
+  .stat.streak .num{color:var(--amber)}
+  .motiv{margin-top:16px;font-weight:600;color:var(--green-bright);font-size:0.95rem}
+
+  /* ── Rhythm legend ── */
+  .rhythm{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .rhythm .rh{flex:1;min-width:240px;display:flex;gap:11px;align-items:flex-start;background:var(--surface-2);border:1px solid var(--border-soft);border-radius:13px;padding:13px 15px}
+  .rhythm .rh .rh-ic{flex-shrink:0;font-size:1.1rem;line-height:1.3}
+  .rhythm .rh b{display:block;font-size:0.9rem;color:var(--text)}
+  .rhythm .rh span.d{font-size:0.83rem;color:var(--text-dim);line-height:1.45}
+
+  /* ── Habit banner ── */
+  .habit{
+    display:flex;gap:12px;align-items:flex-start;
+    margin-top:12px;padding:15px 18px;
+    background:var(--amber-soft);border:1px solid color-mix(in srgb,var(--amber) 35%,transparent);
+    border-radius:14px;font-size:0.9rem;line-height:1.55;
+  }
+  .habit .flame{flex-shrink:0;color:var(--amber);font-size:1.1rem;line-height:1.4}
+  .habit strong{color:var(--text)}
+
+  /* ── Setup (Day 0) ── */
+  .block{margin-top:34px}
+  .block-head{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border-soft)}
+  .block-tag{font-family:"IBM Plex Mono",monospace;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--primary);background:var(--primary-soft);padding:4px 9px;border-radius:7px}
+  .block-tag.amber{color:var(--amber);background:var(--amber-soft)}
+  .block-head h2{font-size:1.22rem;font-weight:700}
+  .block-sub{margin-left:auto;font-size:0.8rem;color:var(--text-faint);font-family:"IBM Plex Mono",monospace}
+  .days{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
+
+  /* setup rows are single-line tasks in their own cards */
+  .setup-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:6px 16px}
+
+  /* ── Day cards (two posts each) ── */
+  .day{
+    display:flex;flex-direction:column;
+    background:var(--surface);border:1px solid var(--border);border-radius:14px;
+    padding:14px 16px 6px;position:relative;
+    transition:border-color .15s,background .15s;
+  }
+  .day-top{display:flex;align-items:baseline;gap:10px;padding-bottom:10px;border-bottom:1px solid var(--border-soft)}
+  .day-num{font-family:"IBM Plex Mono",monospace;font-size:1.05rem;font-weight:600;color:var(--text-faint);font-variant-numeric:tabular-nums;transition:color .18s}
+  .day-theme{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-faint);font-weight:600}
+  .day-badge{margin-left:auto;font-size:0.66rem;font-weight:700;color:var(--green);opacity:0;transition:opacity .2s}
+
+  .prow{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;
+    background:none;border:none;font-family:inherit;color:inherit;cursor:pointer;
+    padding:12px 0;border-radius:10px;transition:background .15s;}
+  .prow + .prow{border-top:1px solid var(--border-soft)}
+  .prow:hover{background:var(--surface-2)}
+  .prow-check{
+    flex-shrink:0;width:24px;height:24px;border-radius:50%;
+    border:2px solid var(--border);background:var(--surface-2);
+    display:flex;align-items:center;justify-content:center;margin-top:2px;
+    transition:background .18s,border-color .18s;
+  }
+  .prow-check svg{width:13px;height:13px;stroke:#fff;stroke-width:3.4;fill:none;opacity:0;transform:scale(.5);transition:opacity .18s,transform .18s}
+  .prow-body{flex:1;min-width:0}
+  .prow-head{display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
+  .slot{font-family:"IBM Plex Mono",monospace;font-size:0.68rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-faint)}
+  .prow-title{display:block;font-weight:700;font-size:0.95rem;letter-spacing:-0.01em;transition:color .18s}
+  .prow-how{display:block;color:var(--text-dim);font-size:0.84rem;line-height:1.5;margin-top:3px}
+
+  .pill{font-size:0.66rem;font-weight:600;padding:2px 8px;border-radius:20px;letter-spacing:0.02em}
+  .pill-both{color:var(--primary-bright);background:var(--primary-soft)}
+  .pill-tw{color:var(--sky);background:var(--sky-soft)}
+  .pill-li{color:var(--indigo);background:var(--indigo-soft)}
+
+  /* the visual spec — the thing that makes each post shippable */
+  .vis{display:flex;gap:8px;align-items:flex-start;margin-top:9px;padding:8px 10px;border-radius:9px;
+    background:var(--surface-2);border:1px dashed var(--border);font-size:0.8rem;color:var(--text-dim);line-height:1.45}
+  .vis .cam{flex-shrink:0;filter:grayscale(0.2)}
+  .vis b{color:var(--text);font-weight:600}
+
+  /* done states */
+  .prow.row-done .prow-check{background:var(--green);border-color:var(--green)}
+  .prow.row-done .prow-check svg{opacity:1;transform:scale(1)}
+  .prow.row-done .prow-title{color:var(--text-dim);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--green) 55%,transparent)}
+  .day.done{background:var(--green-soft);border-color:color-mix(in srgb,var(--green) 45%,transparent)}
+  .day.done .day-num{color:var(--green)}
+  .day.done .day-badge{opacity:1}
+
+  .challenge-actions{margin-top:36px;display:flex;justify-content:center}
+  .btn-ghost{
+    font-family:inherit;font-size:0.82rem;font-weight:600;color:var(--text-faint);
+    background:none;border:1px solid var(--border);border-radius:9px;padding:8px 16px;cursor:pointer;transition:color .15s,border-color .15s;
+  }
+  .btn-ghost:hover{color:var(--text);border-color:var(--text-faint)}
+
+  .alldone{
+    display:none;margin-top:16px;padding:16px 20px;border-radius:14px;
+    background:var(--green-soft);border:1px solid color-mix(in srgb,var(--green) 45%,transparent);
+    font-weight:600;color:var(--green-bright);
+  }
+  .alldone.show{display:block}
+
+  /* ── Playbook / Ready-to-Post (editorial doc) ── */
+  .doc{max-width:760px}
+  .doc-hero{padding:14px 0 30px;border-bottom:1px solid var(--border-soft);margin-bottom:8px}
+  .doc-hero h1{font-size:clamp(1.9rem,5vw,3rem);font-weight:800;line-height:1.05}
+  .doc-hero .thesis{color:var(--text-dim);font-size:1.12rem;margin-top:14px;max-width:56ch}
+  .doc-hero .thesis b{color:var(--text)}
+
+  .sec{margin-top:44px}
+  .sec-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--primary-bright);margin-bottom:10px}
+  .sec h2{font-size:1.5rem;font-weight:800;margin-bottom:6px}
+  .sec p{color:var(--text-dim);margin-top:10px;max-width:65ch}
+  .sec p b,.sec li b{color:var(--text)}
+
+  .decision{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+  .plat{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+  .plat .keep{font-family:"IBM Plex Mono",monospace;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:3px 9px;border-radius:7px}
+  .plat.tw .keep{color:var(--sky);background:var(--sky-soft)}
+  .plat.li .keep{color:var(--indigo);background:var(--indigo-soft)}
+  .plat h3{font-size:1.2rem;font-weight:800;margin:12px 0 6px}
+  .plat p{color:var(--text-dim);font-size:0.92rem}
+
+  .callout{margin-top:20px;padding:18px 20px;border-radius:14px;background:var(--surface-2);border:1px solid var(--border);border-left:3px solid var(--primary)}
+  .callout h3{font-size:1.02rem;font-weight:700;margin-bottom:6px}
+  .callout p{color:var(--text-dim);font-size:0.92rem;margin-top:6px}
+
+  .pillars{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:20px}
+  .pillar{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:17px}
+  .pillar .pname{font-weight:800;font-size:1rem;letter-spacing:-0.01em}
+  .pillar .pex{color:var(--text-dim);font-size:0.86rem;margin-top:7px;line-height:1.5}
+  .pillar .pex em{color:var(--text);font-style:italic}
+
+  .swipe{margin-top:16px;display:flex;flex-direction:column;gap:12px}
+  .post{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+  .post-head{display:flex;align-items:center;gap:10px;padding:11px 15px;border-bottom:1px solid var(--border-soft);background:var(--surface-2)}
+  .post-plat{font-size:0.74rem;font-weight:700;color:var(--text-dim)}
+  .post-copy{margin-left:auto;font-family:inherit;font-size:0.76rem;font-weight:600;color:var(--primary-bright);background:var(--primary-soft);border:none;border-radius:7px;padding:5px 12px;cursor:pointer;transition:opacity .15s}
+  .post-copy:hover{opacity:.8}
+  .post-body{padding:15px;white-space:pre-wrap;font-size:0.92rem;line-height:1.6;color:var(--text)}
+  .post-vis{display:flex;gap:8px;align-items:flex-start;padding:10px 15px;border-top:1px dashed var(--border);background:var(--surface-2);font-size:0.82rem;color:var(--text-dim);line-height:1.45}
+  .post-vis .cam{flex-shrink:0}
+  .post-vis b{color:var(--text);font-weight:600}
+
+  .copy-day{margin-top:30px}
+  .copy-day-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .cd-num{font-family:"IBM Plex Mono",monospace;font-size:0.82rem;font-weight:600;color:var(--primary);background:var(--primary-soft);padding:4px 11px;border-radius:8px;font-variant-numeric:tabular-nums;letter-spacing:0.02em}
+  .copy-day-head h3{font-size:1.15rem;font-weight:800}
+  .copy-note{color:var(--text-faint);font-size:0.82rem;margin:0 0 12px;font-style:italic}
+
+  table.cadence{width:100%;border-collapse:collapse;margin-top:18px;font-size:0.9rem}
+  table.cadence th,table.cadence td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+  table.cadence th{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-faint);font-weight:600}
+  table.cadence td:first-child{font-weight:700}
+  table.cadence tr:last-child td{border-bottom:none}
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:14px;background:var(--surface)}
+
+  .funnel{display:flex;gap:0;margin-top:20px;flex-wrap:wrap;align-items:stretch}
+  .fstep{flex:1;min-width:150px;background:var(--surface);border:1px solid var(--border);padding:16px;position:relative}
+  .fstep:first-child{border-radius:14px 0 0 14px}
+  .fstep:last-child{border-radius:0 14px 14px 0}
+  .fstep+.fstep{border-left:none}
+  .fstep .fn{font-family:"IBM Plex Mono",monospace;font-size:0.74rem;color:var(--text-faint);font-weight:600}
+  .fstep .ft{font-weight:700;margin-top:5px;font-size:0.95rem}
+  .fstep .fd{color:var(--text-dim);font-size:0.82rem;margin-top:5px;line-height:1.45}
+  .fstep.paid{background:var(--primary-soft);border-color:color-mix(in srgb,var(--primary) 40%,transparent)}
+  .fstep.paid .ft{color:var(--primary-bright)}
+
+  .donts{margin-top:18px;list-style:none;padding:0;display:flex;flex-direction:column;gap:10px}
+  .donts li{display:flex;gap:11px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 15px;font-size:0.92rem;color:var(--text-dim)}
+  .donts .x{flex-shrink:0;color:#f87171;font-weight:800;font-family:"IBM Plex Mono",monospace}
+
+  .footnote{margin-top:48px;padding-top:20px;border-top:1px solid var(--border-soft);color:var(--text-faint);font-size:0.84rem;line-height:1.6}
+
+  @media (max-width:640px){
+    .decision{grid-template-columns:1fr}
+    .dash-hero{padding:22px 20px}
+    .topbar{flex-wrap:wrap}
+    .funnel{flex-direction:column}
+    .fstep{border-radius:0!important;border-left:1px solid var(--border)!important;border-top:none}
+    .fstep:first-child{border-radius:14px 14px 0 0;border-top:1px solid var(--border)}
+    .fstep:last-child{border-radius:0 0 14px 14px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important}
+  }
+</style>
+
+<div class="wrap">
+  <header class="topbar">
+    <div class="brand">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M3 18 L9 11 L13 14.5 L20 5.5" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="20" cy="5.5" r="2.4" fill="var(--green)"/>
+      </svg>
+      PrepSync <span class="growth">Growth</span>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Views">
+      <button class="tab active" data-tab="challenge" role="tab" aria-selected="true">30-Day Challenge</button>
+      <button class="tab" data-tab="copy" role="tab" aria-selected="false">Week 1 Posts</button>
+      <button class="tab" data-tab="playbook" role="tab" aria-selected="false">Playbook</button>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </header>
+
+  <main>
+    <!-- ══════════ 30-DAY CHALLENGE ══════════ -->
+    <section class="view" id="view-challenge" role="tabpanel">
+      <div class="dash-hero">
+        <div class="ring-wrap">
+          <svg width="132" height="132" viewBox="0 0 132 132">
+            <circle class="ring-track" cx="66" cy="66" r="56" fill="none" stroke-width="12"/>
+            <circle class="ring-fill" id="ringFill" cx="66" cy="66" r="56" fill="none" stroke-width="12" stroke-dasharray="351.86" stroke-dashoffset="351.86"/>
+          </svg>
+          <div class="ring-center">
+            <span class="pct" id="ringPct">0%</span>
+            <span class="pct-lbl">climbed</span>
+          </div>
+        </div>
+        <div class="dash-stats">
+          <span class="eyebrow">Twitter + LinkedIn · 30 days · 60 posts</span>
+          <h1>The Paying-Users Challenge</h1>
+          <p class="lede">Two posts a day, thirty days. Every post tells you exactly what to say <b>and</b> which image to attach — and no day is wasted on setup. Everything points at one person: someone with an interview coming who's scared of failing it.</p>
+          <div class="stat-row">
+            <div class="stat"><span class="num" id="statDone">0</span><span class="lbl">of 60 posts</span></div>
+            <div class="stat streak"><span class="num" id="statStreak">0</span><span class="lbl">day streak</span></div>
+            <div class="stat"><span class="num" id="statLeft">30</span><span class="lbl">days left</span></div>
+          </div>
+          <p class="motiv" id="motiv">Do Day 0 setup first, then ship Day 1. Tick as you go.</p>
+        </div>
+      </div>
+
+      <div class="alldone" id="allDone">🏁 60 posts, 30 days, done. Now open your PrepSync dashboard, see which posts actually drove signups and Sprint buys, and pour everything into those formats. That's the whole game from here.</div>
+
+      <div class="rhythm">
+        <div class="rh"><span class="rh-ic">☀️</span><span><b>Morning — the value post</b><span class="d">Your heavy one: a thread, teardown, question set or breakdown. This earns trust and gets saved.</span></span></div>
+        <div class="rh"><span class="rh-ic">🌙</span><span><b>Afternoon — the spark post</b><span class="d">Lighter and faster: a poll, hot take, proof, or soft sell. This starts conversations and surfaces buyers.</span></span></div>
+      </div>
+
+      <div class="habit">
+        <span class="flame">▲</span>
+        <span><strong>Every day, on top of the two posts:</strong> 5 helpful replies on Twitter + 5 comments on LinkedIn — only on posts where someone is job-hunting or interviewing. This is where a small account actually gets found. Be useful; never drop raw links.</span>
+      </div>
+
+      <div id="setup"></div>
+      <div id="weeks"></div>
+
+      <div class="challenge-actions">
+        <button class="btn-ghost" id="resetBtn">Reset progress</button>
+      </div>
+    </section>
+
+    <!-- ══════════ PLAYBOOK ══════════ -->
+    <section class="view hidden" id="view-playbook" role="tabpanel">
+      <div class="doc">
+        <div class="doc-hero">
+          <span class="eyebrow">The strategy</span>
+          <h1>Two platforms. Two posts a day. One goal: paying users.</h1>
+          <p class="thesis">You don't need followers — you need <b>people who have an interview coming and are scared of failing it</b>. That's the only human who pays for a Sprint. So the question isn't "where's the biggest audience," it's <b>"where do people announce they're job-hunting."</b></p>
+        </div>
+
+        <div class="sec">
+          <div class="sec-label">The decision</div>
+          <h2>Go deep on Twitter + LinkedIn</h2>
+          <p>Skip the video platforms for now. Reels and TikTok are reach machines, not intent machines — a person scrolling entertainment isn't reaching for their wallet. Do two platforms properly instead of five badly.</p>
+          <div class="decision">
+            <div class="plat tw">
+              <span class="keep">Keep — you're already here</span>
+              <h3>Twitter / X</h3>
+              <p>NG Tech Twitter: devs, job-seekers, people sharing interview stories. Slower to convert, but unbeatable for trust, building in public, and replying inside "who's hiring / I have an interview" threads.</p>
+            </div>
+            <div class="plat li">
+              <span class="keep">Add this — highest intent</span>
+              <h3>LinkedIn</h3>
+              <p>People literally post "open to work," "got an interview," "just got laid off." That is someone reaching for their wallet. The highest-intent platform that exists for interview prep — and you're barely using it.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-label">Why two a day</div>
+          <h2>One post can't do two jobs</h2>
+          <div class="callout">
+            <h3>Value in the morning, spark in the afternoon</h3>
+            <p>A deep thread that <b>proves you know the market</b> is a different tool from a poll or hot take that <b>starts conversations and surfaces buyers</b>. Cram both into one post and each one is weaker. Split them: the <b>☀️ morning</b> post builds authority; the <b>🌙 afternoon</b> post creates the reply/DM where a follower quietly becomes a signup. Two focused shots beat one blurry one — and it doubles your chances of the algorithm picking you up that day.</p>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-label">Why not video</div>
+          <h2>You confirmed it — here's the reasoning</h2>
+          <div class="callout">
+            <h3>Reach ≠ revenue</h3>
+            <p>A viral Reel gets 100k views from people who will never interview this year. One LinkedIn comment on an "I have an interview Friday" post reaches one person who might pay you today. As a solo founder chasing your first paying users, you buy <b>intent</b>, not <b>views</b>. Video comes later, once you have wins to show and time to spare.</p>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-label">The image system</div>
+          <h2>Every post ships with a picture — here's how to make them in 10 minutes</h2>
+          <p>Posts with an image stop the scroll and get shared far more. You don't need a designer. Set up <b>one</b> dark Canva template in PrepSync's colours and reuse it forever. These are the only image types you'll ever make:</p>
+          <div class="pillars">
+            <div class="pillar"><div class="pname">📷 Text card</div><div class="pex">One bold line (a quote, a mock rejection, a 3-step script) on your dark template. Your workhorse.</div></div>
+            <div class="pillar"><div class="pname">📷 Before / after</div><div class="pex">A weak CV bullet in red, the strong rewrite in green. Instantly understood, endlessly reusable.</div></div>
+            <div class="pillar"><div class="pname">📷 Thread cover</div><div class="pex">The teaser image on top of a thread — the topic + one point blurred to make people open it.</div></div>
+            <div class="pillar"><div class="pname">📷 Carousel</div><div class="pex">Multi-slide, one idea per slide. LinkedIn's highest-save format. Great for "5 CV red flags".</div></div>
+            <div class="pillar"><div class="pname">📷 Screenshot</div><div class="pex">Straight from the product — the Sprint journey page, a plan, the pricing, the CV builder. Real &gt; polished.</div></div>
+            <div class="pillar"><div class="pname">📷 Number card</div><div class="pex">The money math: a big salary figure next to a tiny ₦ prep price. Make the gap obvious.</div></div>
+          </div>
+          <p style="margin-top:14px">The <b>30-Day Challenge</b> tab tells you the exact image type for every single one of the 60 posts. Never post naked text.</p>
+        </div>
+
+        <div class="sec">
+          <div class="sec-label">Content engine</div>
+          <h2>Five pillars — rotate them so you never stare at a blank screen</h2>
+          <div class="pillars">
+            <div class="pillar"><div class="pname">Real questions</div><div class="pex">Questions by role &amp; NG company. <em>"3 questions Moniepoint asks backend devs. Most people flunk #2."</em> Shareable, proves you know the market.</div></div>
+            <div class="pillar"><div class="pname">The fear post</div><div class="pex">Name the pain they already feel. <em>"Your CV isn't rejected by humans — an ATS bot kills it before anyone reads it."</em></div></div>
+            <div class="pillar"><div class="pname">Build in public</div><div class="pex">Twitter's favourite. Ship updates + screenshots of the Sprint journey page. Relatable, builds trust.</div></div>
+            <div class="pillar"><div class="pname">Free value → door</div><div class="pex">CV teardowns that push to the <em>free CV builder</em> — your top of funnel. The Sprint is the paid upsell later.</div></div>
+            <div class="pillar"><div class="pname">The money math</div><div class="pex"><em>"A backend role in Lagos pays big. You'll walk in cold and gamble that?"</em> Justifies spending ₦1,500–8,000.</div></div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="sec-label">Cadence</div>
+          <h2>The daily shape — repeatable for one person</h2>
+          <div class="tbl-wrap">
+            <table class="cadence">
+              <thead><tr><th>When</th><th>Post</th><th>Usually goes to</th></tr></thead>
+              <tbody>
+                <tr><td>☀️ Morning</td><td>1 value post — thread, teardown, question set or breakdown</td><td>Twitter thread + repurposed as a LinkedIn post</td></tr>
+                <tr><td>🌙 Afternoon</td><td>1 spark post — poll, hot take, proof, or soft sell</td><td>Twitter (LinkedIn too when it fits)</td></tr>
+                <tr><td>All day</td><td>5 replies + 5 comments on job/interview posts</td><td>Twitter &amp; LinkedIn</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin-top:14px"><b>One idea = one Twitter thread + one LinkedIn post.</b> Write the morning value once, shape it for both platforms — that's how one person keeps two platforms alive without burning out.</p>
+        </div>
+
+        <div class="sec">
+          <div class="sec-label">The funnel</div>
+          <h2>The part people skip</h2>
+          <div class="funnel">
+            <div class="fstep"><div class="fn">01</div><div class="ft">Content</div><div class="fd">A free question or tip that reaches someone interviewing soon.</div></div>
+            <div class="fstep"><div class="fn">02</div><div class="ft">Link in comments</div><div class="fd">Never in the post body — both algorithms bury outbound links. "Comment CV, I'll send it."</div></div>
+            <div class="fstep"><div class="fn">03</div><div class="ft">Free CV builder</div><div class="fd">The front door. They sign up and get real value for ₦0.</div></div>
+            <div class="fstep paid"><div class="fn">04</div><div class="ft">Sprint — paid</div><div class="fd">When they have a real interview, the Sprint is the obvious next step.</div></div>
+          </div>
+          <p style="margin-top:16px">The <b>only</b> metric that matters: signups → Sprint purchases. A viral tweet with zero signups is worth ₦0. Use a tracked link and watch which posts actually convert.</p>
+        </div>
+
+        <div class="sec">
+          <div class="sec-label">Discipline</div>
+          <h2>Do NOT</h2>
+          <ul class="donts">
+            <li><span class="x">✕</span><span>Chase followers or likes. Followers ≠ money.</span></li>
+            <li><span class="x">✕</span><span>Wait to "build an audience" before you sell. Sell from day one via replies + job groups.</span></li>
+            <li><span class="x">✕</span><span>Add TikTok / IG / YouTube now. Two done consistently beats five done randomly.</span></li>
+            <li><span class="x">✕</span><span>Drop raw links in post bodies. Comments and bio only.</span></li>
+            <li><span class="x">✕</span><span>Post naked text. Every post gets its image — that's why it's on every card.</span></li>
+          </ul>
+        </div>
+
+        <div class="sec">
+          <div class="sec-label">Bonus accelerant</div>
+          <h2>WhatsApp &amp; Telegram job groups</h2>
+          <p>This gets you paying users <b>fastest</b> — it's distribution, not content, so it lives in your Day 0 setup, not the daily posts. Join 5–10 NG job/tech groups. Don't spam: answer questions, and when someone says "I have an interview," help them and mention the tool. Warm, high-intent, free.</p>
+        </div>
+
+        <p class="footnote">Your product already fits this funnel: the <b>CV builder is the free front door</b>, and the <b>Sprint is the one-time paid product</b> people buy when a real interview is on the line. Every post should push toward one or the other. Small small, e go add up — consistency pass talent for this game.</p>
+      </div>
+    </section>
+
+    <!-- ══════════ WEEK 1 POSTS ══════════ -->
+    <section class="view hidden" id="view-copy" role="tabpanel">
+      <div class="doc">
+        <div class="doc-hero">
+          <span class="eyebrow">Ready to paste · 14 posts</span>
+          <h1>Week 1, written for you — both posts, every day</h1>
+          <p class="thesis">Real Nigerian companies, real questions. Edit anything in <b>[brackets]</b>, hit <b>Copy</b>, and post. Each one tells you the <b>📷 image to attach</b>. Do Day 0 setup first so your bio link and image template are ready.</p>
+        </div>
+
+        <!-- DAY 1 -->
+        <div class="copy-day">
+          <div class="copy-day-head"><span class="cd-num">Day 01</span><h3>Show up loud</h3></div>
+          <p class="copy-note">Plant your flag: what PrepSync is, and who you are. Link stays in bio.</p>
+          <div class="swipe">
+            <div class="post">
+              <div class="post-head"><span class="post-plat">☀️ Morning · Twitter + LinkedIn · the manifesto</span><button class="post-copy" type="button">Copy</button></div>
+              <div class="post-body">Interview prep in Nigeria is broken.
+
+Everybody hands you "500 common questions" and says good luck.
+
+But Paystack no dey interview like an agency, and a backend role isn't a data role.
+
+Prep for YOUR interview — the exact company, the role, the date. That's the whole idea behind PrepSync.
+
+Free CV builder to start 👇 (link in bio)</div>
+              <div class="post-vis"><span class="cam">📷</span><span><b>Text card</b> — one bold line on your dark template: "Nobody fails for lack of 500 questions. They fail unprepared for THAT company."</span></div>
+            </div>
+            <div class="post">
+              <div class="post-head"><span class="post-plat">🌙 Afternoon · Twitter · founder intro</span><button class="post-copy" type="button">Copy</button></div>
+              <div class="post-body">I'm [name]. I'm building PrepSync — AI interview prep for Nigerians, tuned to the exact company and role you're chasing.
+
+For the next 30 days I'm posting the real questions NG companies actually ask, and building this in public.
+
+If you've got an interview coming, follow along. Threads start tomorrow. 👇</div>
+              <div class="post-vis"><span class="cam">📷</span><span><b>Real photo</b> — you, or your desk/setup. People follow a human, not a logo. Pin this tweet.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAY 2 -->
+        <div class="copy-day">
+          <div class="copy-day-head"><span class="cd-num">Day 02</span><h3>Your money format + the product</h3></div>
+          <p class="copy-note">The "3 questions" thread is your best-performing format. Reply to every "CV" comment with the link.</p>
+          <div class="swipe">
+            <div class="post">
+              <div class="post-head"><span class="post-plat">☀️ Morning · Twitter thread (→ LinkedIn)</span><button class="post-copy" type="button">Copy</button></div>
+              <div class="post-body">Paystack, Moniepoint &amp; Flutterwave keep testing backend candidates on the same 3 things in 2026.
+
+Most people prep for one and get cut on the other two. 🧵
+
+1/ Idempotency.
+"A payment retry fails halfway. How do you make sure the customer isn't charged twice?"
+Can't explain idempotency keys? A payments company won't hire you. This is the #1 filter.
+
+2/ Databases under real load.
+"A transactions table has 50M rows and queries crawl. What now?"
+They want indexes, partitioning, read replicas, killing N+1 queries — not "add more RAM."
+
+3/ Concurrency on money.
+"Design a wallet. Two withdrawals hit the same balance at the same millisecond — what happens?"
+Race conditions, locking, ACID. Say "eventual consistency" about someone's balance and it's over.
+
+The pattern: they test the company's real problems, not "backend" in the abstract.
+
+That's the whole point of PrepSync — pick the company, pick the role, get the exact plan. Free CV tool to start 👇 (comment "CV")</div>
+              <div class="post-vis"><span class="cam">📷</span><span><b>Thread cover</b> — a card reading "3 questions Paystack asks backend devs" with question #2 blurred as a teaser.</span></div>
+            </div>
+            <div class="post">
+              <div class="post-head"><span class="post-plat">🌙 Afternoon · Twitter + LinkedIn · ship-it</span><button class="post-copy" type="button">Copy</button></div>
+              <div class="post-body">I got tired of "interview prep" meaning: read 500 random questions and pray. 😮‍💨
+
+So PrepSync now builds a day-by-day plan for YOUR interview — one company, one role, one deadline.
+
+Pay once for the interview you're chasing. No subscription.
+
+Here's what the plan looks like 👇</div>
+              <div class="post-vis"><span class="cam">📷</span><span><b>Screenshot</b> — the Sprint journey page, cropped to the day-by-day trail. Straight from the app.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAY 3 -->
+        <div class="copy-day">
+          <div class="copy-day-head"><span class="cd-num">Day 03</span><h3>The fear + the fix</h3></div>
+          <p class="copy-note">Name the pain everyone feels (silent rejection), then hand them a fix. This one travels.</p>
+          <div class="swipe">
+            <div class="post">
+              <div class="post-head"><span class="post-plat">☀️ Morning · Twitter + LinkedIn · the fear post</span><button class="post-copy" type="button">Copy</button></div>
+              <div class="post-body">That "we've decided to move forward with other candidates" email?
+
+There's a good chance no human ever read your CV.
+
+Most companies run an ATS — software that scans for keywords from the job post before a recruiter sees anything. No match, no interview. Silent rejection.
+
+How to beat the bot:
+• Mirror the exact words from the job post (if it says "React," don't write "front-end frameworks")
+• Skip columns, tables and graphics — bots can't read them
+• Normal font, standard headings (Experience, Education, Skills)
+• Save as PDF unless told otherwise
+
+Prep smart, not just hard. (Our free CV builder checks all of this — comment "CV".)</div>
+              <div class="post-vis"><span class="cam">📷</span><span><b>Text card</b> — a mock screen: "Application status: Rejected — automated" then "Here's how to beat the bot 👇".</span></div>
+            </div>
+            <div class="post">
+              <div class="post-head"><span class="post-plat">🌙 Afternoon · Twitter + LinkedIn · CV teardown</span><button class="post-copy" type="button">Copy</button></div>
+              <div class="post-body">The difference between a CV that gets called and one that gets ignored is one word: proof.
+
+❌ "Responsible for managing backend systems."
+✅ "Cut API response time 40% by redesigning the payment retry queue (Node, Redis)."
+
+Number. Impact. Tools. Do that to every bullet today.
+
+I built a free tool that rewrites your CV like this and checks it against ATS filters. Comment "CV" and I'll send it. 👇</div>
+              <div class="post-vis"><span class="cam">📷</span><span><b>Before / after card</b> — the red ❌ bullet above the green ✅ bullet. Screenshot-shareable.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAY 4 -->
+        <div class="copy-day">
+          <div class="copy-day-head"><span class="cd-num">Day 04</span><h3>New role, same format + a poll</h3></div>
+          <p class="copy-note">Prove the "3 questions" series isn't a one-off. The poll is pure intent-mining — reply to every voter.</p>
+          <div class="swipe">
+            <div class="post">
+              <div class="post-head"><span class="post-plat">☀️ Morning · Twitter thread (→ LinkedIn)</span><button class="post-copy" type="button">Copy</button></div>
+              <div class="post-body">3 things Kuda, Flutterwave &amp; PiggyVest keep testing frontend engineers on in 2026 👇
+
+1/ Rendering &amp; performance.
+"This list of 10,000 rows freezes the page. Fix it." They want virtualization, memoization, and knowing what actually triggers a re-render.
+
+2/ State, honestly.
+"When would you NOT reach for a global store?" Junior answer: "always Redux." Strong answer: local state first, lift only when shared.
+
+3/ The real-world edge cases.
+"The API is slow and sometimes fails. What does the user see?" Loading, error, empty and retry states — not just the happy path.
+
+Notice: it's their real product problems, not trivia. Prep for the company, not "frontend" in general. Free CV tool 👇 (comment "CV")</div>
+              <div class="post-vis"><span class="cam">📷</span><span><b>Thread cover</b> — "3 questions Kuda &amp; Flutterwave ask frontend devs", same template as Day 2 (build a recognisable series).</span></div>
+            </div>
+            <div class="post">
+              <div class="post-head"><span class="post-plat">🌙 Afternoon · Twitter · poll</span><button class="post-copy" type="button">Copy</button></div>
+              <div class="post-body">Where do you choke most in interviews?
+
+🔘 Screening call
+🔘 Take-home / assessment
+🔘 Onsite / live coding
+🔘 Behavioral ("tell me about a time…")
+
+Vote 👇 and I'll drop a real tip for whichever wins. Reply with the company you're prepping for and I'll get specific.</div>
+              <div class="post-vis"><span class="cam">📷</span><span><b>No image</b> — use Twitter's native poll. The replies are your intent list; DM helpfully.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAY 5 -->
+        <div class="copy-day">
+          <div class="copy-day-head"><span class="cd-num">Day 05</span><h3>Make the money obvious</h3></div>
+          <p class="copy-note">Justify the ₦ spend, then give away a script so good they screenshot it.</p>
+          <div class="swipe">
+            <div class="post">
+              <div class="post-head"><span class="post-plat">☀️ Morning · Twitter + LinkedIn · the money math</span><button class="post-copy" type="button">Copy</button></div>
+              <div class="post-body">A mid-level backend role in Lagos pays serious money — every single month.
+
+You'll walk into that interview cold and gamble it on vibes?
+
+₦1,500–8,000 to know the exact questions they ask, with a day-by-day plan, isn't an expense. It's insurance on your salary.
+
+Do the math. Then prep like the offer matters. 👇 (free CV tool in bio)</div>
+              <div class="post-vis"><span class="cam">📷</span><span><b>Number card</b> — a big "₦[monthly salary]" next to a tiny "₦1,500 to prep". Make the gap look almost silly.</span></div>
+            </div>
+            <div class="post">
+              <div class="post-head"><span class="post-plat">🌙 Afternoon · Twitter + LinkedIn · steal-this script</span><button class="post-copy" type="button">Copy</button></div>
+              <div class="post-body">"Tell me about yourself" — the version that actually works (NG edition):
+
+1. What you do now + ONE concrete win (with a number)
+2. One relevant thing you did before that
+3. Why THIS role, at THIS company
+
+30 seconds. No life story from secondary school. Steal this and use it today. 👇</div>
+              <div class="post-vis"><span class="cam">📷</span><span><b>Text card</b> — the 3-step script laid out clean on your dark template. High-save content.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAY 6 -->
+        <div class="copy-day">
+          <div class="copy-day-head"><span class="cd-num">Day 06</span><h3>The stage nobody preps for</h3></div>
+          <p class="copy-note">Take-home advice is rare and genuinely useful — then a clean push to the free tool.</p>
+          <div class="swipe">
+            <div class="post">
+              <div class="post-head"><span class="post-plat">☀️ Morning · Twitter + LinkedIn · the take-home trap</span><button class="post-copy" type="button">Copy</button></div>
+              <div class="post-body">The take-home stage quietly cuts more people than the live interview.
+
+Not because their code is wrong — because they:
+• over-engineer a simple brief
+• ignore the README, tests and instructions
+• miss the ONE thing the task actually asked for
+
+Reviewers skim. Do less, but nail exactly what was asked, and leave a short note on your choices.
+
+That "small" assessment is the interview. Treat it like one. 👇</div>
+              <div class="post-vis"><span class="cam">📷</span><span><b>Text card</b> — the 3 take-home mistakes as a tight checklist. Clear, saveable.</span></div>
+            </div>
+            <div class="post">
+              <div class="post-head"><span class="post-plat">🌙 Afternoon · Twitter + LinkedIn · free tool</span><button class="post-copy" type="button">Copy</button></div>
+              <div class="post-body">Your CV gets about 6 seconds — first the ATS, then a recruiter's glance.
+
+I built a free tool that rewrites your bullets with real numbers and checks you against ATS filters. No paywall to try it.
+
+Comment "CV" and I'll send the link. 👇</div>
+              <div class="post-vis"><span class="cam">📷</span><span><b>Screenshot</b> — the free CV builder mid-use (or a short screen-recording if you can).</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAY 7 -->
+        <div class="copy-day">
+          <div class="copy-day-head"><span class="cd-num">Day 07</span><h3>Recap + open the door</h3></div>
+          <p class="copy-note">Build-in-public recap (honest beats polished), then a reply-magnet that surfaces real interviews.</p>
+          <div class="swipe">
+            <div class="post">
+              <div class="post-head"><span class="post-plat">☀️ Morning · Twitter + LinkedIn · week-1 recap</span><button class="post-copy" type="button">Copy</button></div>
+              <div class="post-body">Week 1 of building PrepSync in public 👇
+
+What I shipped:
+• Rebuilt prep into a day-by-day plan for a specific interview
+• Posted the real backend + frontend questions NG companies actually ask
+• Started fixing people's CVs for free
+
+What I learned:
+Nobody wants "500 questions." They want THEIR interview handled — the company, the role, the date.
+
+Week 2: data + product interviews, the behavioral script that lands, and the salary math that makes prep a no-brainer. Follow along. 🚀</div>
+              <div class="post-vis"><span class="cam">📷</span><span><b>Text card</b> — three short lines: "Week 1 — shipped / learned / next". Consistent template = a recognisable series.</span></div>
+            </div>
+            <div class="post">
+              <div class="post-head"><span class="post-plat">🌙 Afternoon · Twitter · reply magnet</span><button class="post-copy" type="button">Copy</button></div>
+              <div class="post-body">Quick one 👇
+
+Drop the company + role you're interviewing for, and I'll tell you the #1 thing they actually test.
+
+Serious — I'm replying to everyone today.</div>
+              <div class="post-vis"><span class="cam">📷</span><span><b>No image</b> — a plain question tweet. Every reply is a warm lead; answer well, then DM the free tool.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <p class="footnote">Golden rule for all of these: the <b>link goes in the bio or the comments, never the post body</b> — both algorithms bury posts with outbound links. When someone comments "CV", reply with the free CV builder link. That reply is where a follower quietly becomes a signup. Want Weeks 2–4 written out like this too? Ask and I'll drop them.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  "use strict";
+
+  // ── Data: Day 0 setup (done once, not counted in the 60) ────────────
+  var SETUP = [
+    {id:"s1", title:"Fix both bios", how:"Twitter bio + LinkedIn headline & Featured: one line on PrepSync + the free CV builder link. Your bio is the only safe place for a raw link."},
+    {id:"s2", title:"Join 5–10 job groups", how:"WhatsApp + Telegram NG job/tech groups. Introduce yourself once, then just be useful. Fastest distribution you have."},
+    {id:"s3", title:"Build your 10-min image kit", how:"One dark Canva template in PrepSync colours + learn to screenshot the Sprint page clean. You'll reuse it for every post."}
+  ];
+
+  // ── Data: the 30 days × 2 posts ─────────────────────────────────────
+  var WEEKS = [
+    { tag:"Week 1", title:"Show up loud",              range:"Days 1–7" },
+    { tag:"Week 2", title:"Prove you know the market", range:"Days 8–14" },
+    { tag:"Week 3", title:"Turn on the funnel",        range:"Days 15–21" },
+    { tag:"Week 4", title:"Compound & convert",        range:"Days 22–30" }
+  ];
+
+  // vt = visual type → label shown on the 📷 chip
+  var VT = {
+    text:"Text card", ba:"Before / after", thread:"Thread cover", carousel:"Carousel",
+    shot:"Screenshot", diagram:"Diagram", num:"Number card", photo:"Real photo", none:"No image"
+  };
+
+  var DAYS = [
+    // ── Week 1 — Show up loud ──
+    {d:1, w:0, theme:"Show up loud",
+      am:{plat:"both", title:"The manifesto", how:"Why prep is broken — everyone hands you 500 random questions. PrepSync builds a plan for YOUR one interview.", vt:"text", vis:"One bold line on dark: “They don't fail for lack of 500 questions — they fail unprepared for THAT company.”"},
+      pm:{plat:"tw", title:"Founder intro + the challenge", how:"Tell NG Tech Twitter who you are and that you're building in public for 30 days. Ask them to follow along.", vt:"photo", vis:"A real photo of you or your desk. Pin the tweet."}},
+    {d:2, w:0, theme:"Show up loud",
+      am:{plat:"both", title:"3 questions Paystack asks backend devs", how:"Your money format's first outing. Full thread on Twitter, tighter version on LinkedIn.", vt:"thread", vis:"Cover card: “3 questions · Paystack · Backend” with #2 blurred."},
+      pm:{plat:"both", title:"Ship-it", how:"Show the product. “Pay once for the interview you're chasing. No subscription.”", vt:"shot", vis:"Sprint journey page, cropped to the day-by-day trail."}},
+    {d:3, w:0, theme:"Show up loud",
+      am:{plat:"both", title:"The ATS fear post", how:"“A bot killed your CV before a human saw it.” Name the pain, then the 4 fixes.", vt:"text", vis:"Mock “Application rejected — automated” card, then “how to beat it 👇”."},
+      pm:{plat:"both", title:"CV one-liner teardown", how:"One weak bullet vs the strong rewrite. End with “comment CV”; reply to every one.", vt:"ba", vis:"Red ❌ weak bullet above green ✅ rewrite."}},
+    {d:4, w:0, theme:"Show up loud",
+      am:{plat:"both", title:"Frontend questions edition", how:"Same series, new role: Kuda / Flutterwave frontend. Prove it's not a one-off.", vt:"thread", vis:"Cover card matching Day 2's template — build a recognisable look."},
+      pm:{plat:"tw", title:"Poll: where do you choke?", how:"Screening / Take-home / Onsite / Behavioral. Reply to every voter with a real tip.", vt:"none", vis:"Native Twitter poll. The replies are your lead list."}},
+    {d:5, w:0, theme:"Show up loud",
+      am:{plat:"both", title:"The money math", how:"A Lagos salary vs walking in cold. Make ₦1,500–8,000 feel like insurance, not a cost.", vt:"num", vis:"Big monthly salary figure next to a tiny ₦ prep price."},
+      pm:{plat:"both", title:"“Tell me about yourself” script", how:"The 30-second NG version. A script people can screenshot and use today.", vt:"text", vis:"3-step script laid out clean on your template."}},
+    {d:6, w:0, theme:"Show up loud",
+      am:{plat:"both", title:"The take-home trap", how:"The mistakes that get people cut at the assessment stage — and how to avoid them.", vt:"text", vis:"3 take-home mistakes as a tight checklist card."},
+      pm:{plat:"both", title:"Free CV tool push", how:"6-second CV rule. “Comment CV” for the free builder. New angle on the front door.", vt:"shot", vis:"The free CV builder mid-use (screenshot or short clip)."}},
+    {d:7, w:0, theme:"Show up loud",
+      am:{plat:"both", title:"Week-1 recap", how:"Build in public: what shipped, what you learned, what's next. Honesty earns trust.", vt:"text", vis:"“Week 1 — shipped / learned / next”, 3 short lines."},
+      pm:{plat:"tw", title:"Reply magnet", how:"“Drop the company + role you're interviewing for; I'll tell you the #1 thing they test.”", vt:"none", vis:"Plain question tweet. Every reply is a warm lead."}},
+
+    // ── Week 2 — Prove you know the market ──
+    {d:8, w:1, theme:"Prove the market",
+      am:{plat:"both", title:"Data / analyst edition", how:"“3 questions Moniepoint asks data & analyst candidates.” Widen past just devs.", vt:"thread", vis:"Series cover card — data/analyst edition."},
+      pm:{plat:"tw", title:"Hot take", how:"“Leetcode grinding is overrated for NG fintech interviews. Here's what they actually test.”", vt:"text", vis:"One spicy line on your dark template."}},
+    {d:9, w:1, theme:"Prove the market",
+      am:{plat:"both", title:"Mobile dev edition", how:"“3 questions Opay / PalmPay ask mobile engineers.” Keep the company series rolling.", vt:"thread", vis:"Series cover card — mobile edition."},
+      pm:{plat:"both", title:"CV red flag #1", how:"The useless “objective” / summary nobody reads — and what to write instead.", vt:"ba", vis:"Weak summary vs sharp one-liner, red/green."}},
+    {d:10, w:1, theme:"Prove the market",
+      am:{plat:"tw", title:"System design, lite", how:"A friendly walk-through for mid-level devs. Approachable, not scary.", vt:"diagram", vis:"A simple boxes-and-arrows diagram (Canva or hand-drawn)."},
+      pm:{plat:"both", title:"Proof drop", how:"Anonymised DM/screenshot of someone you helped, or “someone just used the free tool and said…”", vt:"shot", vis:"Anonymised DM or testimonial screenshot."}},
+    {d:11, w:1, theme:"Prove the market",
+      am:{plat:"both", title:"Behavioral, done right (STAR)", how:"The NG behavioral questions that trip people up + the STAR structure to answer them.", vt:"text", vis:"STAR framework as a clean 4-part card."},
+      pm:{plat:"tw", title:"Poll: interviews with zero prep?", how:"“How many interviews have you done this year with ZERO prep?” Start the guilt gently.", vt:"none", vis:"Native poll. Follow up in replies."}},
+    {d:12, w:1, theme:"Prove the market",
+      am:{plat:"both", title:"Product / PM edition", how:"“3 questions NG startups ask product managers.” Reach the non-eng buyers too.", vt:"thread", vis:"Series cover card — product edition."},
+      pm:{plat:"both", title:"The money math #2", how:"Different role (frontend or data). Same point: prep is cheap next to the salary.", vt:"num", vis:"Salary vs ₦ prep price, new role."}},
+    {d:13, w:1, theme:"Prove the market",
+      am:{plat:"both", title:"Free checklist drop", how:"“Comment PREP for my pre-interview checklist.” A second free front door into your DMs.", vt:"text", vis:"A partial/blurred checklist preview — “comment PREP for the full list”."},
+      pm:{plat:"tw", title:"Build-in-public micro-win", how:"Share one real number — signups, comments, DMs. Small wins compound trust.", vt:"num", vis:"Screenshot of the actual number."}},
+    {d:14, w:1, theme:"Prove the market",
+      am:{plat:"both", title:"Week-2 recap + a number", how:"Recap with one real metric. Numbers make the whole thing credible.", vt:"num", vis:"Recap card with the week's headline number."},
+      pm:{plat:"both", title:"Reply magnet #2", how:"“Company + role → I'll give you the #1 thing they test.” It worked in week 1; run it back.", vt:"none", vis:"Plain question post."}},
+
+    // ── Week 3 — Turn on the funnel ──
+    {d:15, w:2, theme:"Turn on the funnel",
+      am:{plat:"both", title:"Show the whole plan", how:"Walk through a full Sprint plan for a named role. “Here's your 7-day plan for X.”", vt:"shot", vis:"Full Sprint plan / journey trail screenshot."},
+      pm:{plat:"both", title:"Objection: why pay?", how:"“Why pay when free resources exist?” Answer it honestly — that's what converts skeptics.", vt:"text", vis:"The one-line honest answer on a card."}},
+    {d:16, w:2, theme:"Turn on the funnel",
+      am:{plat:"both", title:"5 CV red flags", how:"LinkedIn carousel, Twitter thread. High-save, high-share — the format LinkedIn loves.", vt:"carousel", vis:"5 slides, one red flag per slide, on your template."},
+      pm:{plat:"both", title:"New company edition", how:"Andela / Interswitch real questions. Keep the series people now follow you for.", vt:"thread", vis:"Series cover card — new company."}},
+    {d:17, w:2, theme:"Turn on the funnel",
+      am:{plat:"li", title:"Founder story", how:"The real why behind PrepSync. Lead on LinkedIn, trim it for Twitter. People buy from people.", vt:"photo", vis:"A personal photo, or an early screenshot of the product."},
+      pm:{plat:"both", title:"First real soft sell", how:"“Sprints start at ₦1,500 and unlock the whole plan. Link in comments.” You've earned the ask.", vt:"shot", vis:"The (flat, clean) pricing page snapshot."}},
+    {d:18, w:2, theme:"Turn on the funnel",
+      am:{plat:"both", title:"Offer-stage tips", how:"Salary negotiation / handling the offer. Value at the deep end of the funnel.", vt:"text", vis:"3 negotiation do's as a card."},
+      pm:{plat:"tw", title:"Poll: would you pay ₦1,500?", how:"“…to know the exact questions your interviewer asks?” Quietly market-tests price.", vt:"none", vis:"Native poll. Read the comments closely."}},
+    {d:19, w:2, theme:"Turn on the funnel",
+      am:{plat:"both", title:"Case study", how:"Walk through exactly how you'd prep someone for a specific real interview this week.", vt:"shot", vis:"Sprint plan screenshot for that scenario."},
+      pm:{plat:"both", title:"Free tool, fresh angle", how:"Re-push the CV builder for anyone who missed it. New hook, same door.", vt:"shot", vis:"CV builder screenshot — a different view than Day 6."}},
+    {d:20, w:2, theme:"Turn on the funnel",
+      am:{plat:"both", title:"DevOps / QA edition", how:"Another role for the series. Show breadth — you cover the whole market.", vt:"thread", vis:"Series cover card — DevOps/QA."},
+      pm:{plat:"both", title:"Testimonial / proof", how:"Quote a real user (once you have one) or a milestone. Proof sells harder than claims.", vt:"text", vis:"Testimonial quote card, name/handle if allowed."}},
+    {d:21, w:2, theme:"Turn on the funnel",
+      am:{plat:"both", title:"Week-3 recap + sell", how:"Recap, then a clear line on what a Sprint gives and what it costs. Link in comments.", vt:"num", vis:"Recap card with the headline metric."},
+      pm:{plat:"tw", title:"Urgency seed", how:"“Interview season is now — don't walk in cold.” Plant urgency for the final week.", vt:"text", vis:"One urgent line on your template."}},
+
+    // ── Week 4 — Compound & convert ──
+    {d:22, w:3, theme:"Compound & convert",
+      am:{plat:"both", title:"Remix your best", how:"Take your top-performing post so far and rework it deeper. Reuse what already worked.", vt:"thread", vis:"Reuse the winning format's visual style."},
+      pm:{plat:"both", title:"Ask for proof", how:"Invite anyone who got an offer to share a line. Start building your testimonial bank.", vt:"none", vis:"Plain ask post — replies become tomorrow's proof."}},
+    {d:23, w:3, theme:"Compound & convert",
+      am:{plat:"both", title:"Objection: I'll just Google it", how:"Answer the “free resources exist” objection honestly. Free ≠ organised for YOUR interview.", vt:"text", vis:"The honest one-line answer on a card."},
+      pm:{plat:"both", title:"Bank / fintech edition", how:"GTBank / Access-style questions. Fresh company, proven format.", vt:"thread", vis:"Series cover card — new employer."}},
+    {d:24, w:3, theme:"Compound & convert",
+      am:{plat:"both", title:"The NG interview stack", how:"A big value thread: each stage → what's tested → how PrepSync covers it. Your flagship post.", vt:"diagram", vis:"A single-image funnel/stack diagram of the stages."},
+      pm:{plat:"both", title:"Direct sell", how:"Clear Sprint CTA with the ₦ price. No hedging — you've given value for 3 weeks.", vt:"shot", vis:"Pricing page snapshot."}},
+    {d:25, w:3, theme:"Compound & convert",
+      am:{plat:"both", title:"Behavioral deep-dive", how:"“Greatest weakness”, “why you left” — the traps + scripts that actually work.", vt:"text", vis:"Script card for the hardest question."},
+      pm:{plat:"tw", title:"Poll: what's stopping you?", how:"Time / Money / Don't know how / Fear. Their answer tells you exactly what to post next.", vt:"none", vis:"Native poll — pure market research."}},
+    {d:26, w:3, theme:"Compound & convert",
+      am:{plat:"both", title:"New company edition", how:"Keep the series alive — people now follow you specifically for it.", vt:"thread", vis:"Series cover card — new company."},
+      pm:{plat:"tw", title:"26-day build-in-public win", how:"Tease the finish line + share a genuine win. Bring people to the finale.", vt:"num", vis:"Screenshot of a real number."}},
+    {d:27, w:3, theme:"Compound & convert",
+      am:{plat:"both", title:"Value bomb", how:"“20 questions almost every NG backend interview includes.” Give a huge free list.", vt:"text", vis:"Partial list card → “comment for the full 20”."},
+      pm:{plat:"both", title:"Reply sprint", how:"Go hard on high-intent replies today; mention the tool only where it genuinely helps.", vt:"none", vis:"No post image — this slot is engagement, not broadcast."}},
+    {d:28, w:3, theme:"Compound & convert",
+      am:{plat:"both", title:"Urgency: it's closer than you think", how:"“Your interview is sooner than you're ready for.” Push prep-now, hard.", vt:"text", vis:"A countdown-style urgency card."},
+      pm:{plat:"both", title:"Direct sell #2", how:"Your best-performing format + a clean Sprint CTA. Second clear ask of the week.", vt:"shot", vis:"Sprint plan or pricing snapshot."}},
+    {d:29, w:3, theme:"Compound & convert",
+      am:{plat:"both", title:"Does AI prep actually work?", how:"Answer the trust objection by showing the mechanism — the mock interview + report.", vt:"shot", vis:"Mock-interview or report screenshot from the app."},
+      pm:{plat:"both", title:"Strongest proof", how:"Lead with the best result or testimonial you have by now. Let the win do the selling.", vt:"text", vis:"Testimonial / results card."}},
+    {d:30, w:3, theme:"Compound & convert",
+      am:{plat:"both", title:"30-day recap finale", how:"The numbers, the lessons, thank the community, one big CTA. Build in public, closed loop.", vt:"num", vis:"Big recap card with the 30-day numbers."},
+      pm:{plat:"both", title:"Plant the flag for what's next", how:"What the series becomes next + a pinned Sprint CTA. Don't stop the momentum.", vt:"text", vis:"A “what's next” card; pin it to your profile."}}
+  ];
+
+  var PILL = {
+    both:{c:"pill-both", t:"Both"},
+    tw:{c:"pill-tw", t:"Twitter"},
+    li:{c:"pill-li", t:"LinkedIn"}
+  };
+
+  var STORE_KEY = "ps_growth_progress_v2";
+  var SETUP_KEY = "ps_growth_setup_v2";
+  var THEME_KEY = "ps_growth_theme_v1";
+  var TAB_KEY   = "ps_growth_tab_v1";
+  var CIRC = 351.86;      // 2πr, r=56
+  var TOTAL_POSTS = 60;   // 30 days × 2
+
+  // ── Safe storage ────────────────────────────────────────────────────
+  function loadArr(key){ try{ var r=localStorage.getItem(key); return r?JSON.parse(r):[]; }catch(e){ return []; } }
+  function saveArr(key,arr){ try{ localStorage.setItem(key, JSON.stringify(arr)); }catch(e){} }
+
+  var done = {};   // keyed by post id: "1a","1p", …
+  loadArr(STORE_KEY).forEach(function(id){ done[id]=true; });
+  var setupDone = {};
+  loadArr(SETUP_KEY).forEach(function(id){ setupDone[id]=true; });
+
+  var checkSVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 L10 18 L20 6"/></svg>';
+
+  function visLine(post){
+    if(post.vt === "none"){
+      return '<div class="vis"><span class="cam">✋</span><span><b>No image</b> — '+post.vis+'</span></div>';
+    }
+    return '<div class="vis"><span class="cam">📷</span><span><b>'+VT[post.vt]+'</b> — '+post.vis+'</span></div>';
+  }
+
+  function postRow(dayNum, slotKey, label, post){
+    var id = dayNum + slotKey;
+    var isDone = !!done[id];
+    var p = PILL[post.plat];
+    return '<button class="prow'+(isDone?' row-done':'')+'" data-post="'+id+'" aria-pressed="'+isDone+'">'
+      + '<span class="prow-check">'+checkSVG+'</span>'
+      + '<span class="prow-body">'
+      +   '<span class="prow-head"><span class="slot">'+label+'</span><span class="pill '+p.c+'">'+p.t+'</span></span>'
+      +   '<span class="prow-title">'+post.title+'</span>'
+      +   '<span class="prow-how">'+post.how+'</span>'
+      +   visLine(post)
+      + '</span></button>';
+  }
+
+  // ── Render Day 0 setup ──────────────────────────────────────────────
+  function renderSetup(){
+    var host = document.getElementById("setup");
+    var rows = SETUP.map(function(s){
+      var isDone = !!setupDone[s.id];
+      return '<button class="prow'+(isDone?' row-done':'')+'" data-set="'+s.id+'" aria-pressed="'+isDone+'">'
+        + '<span class="prow-check">'+checkSVG+'</span>'
+        + '<span class="prow-body">'
+        +   '<span class="prow-title">'+s.title+'</span>'
+        +   '<span class="prow-how">'+s.how+'</span>'
+        + '</span></button>';
+    }).join("");
+    host.innerHTML =
+      '<div class="block"><div class="block-head">'
+      + '<span class="block-tag amber">Day 0</span>'
+      + '<h2>Set up once, then never again</h2>'
+      + '<span class="block-sub">do this first</span></div>'
+      + '<div class="setup-card">'+rows+'</div></div>';
+  }
+
+  // ── Render weeks + day cards ────────────────────────────────────────
+  function dayComplete(d){ return !!done[d+"a"] && !!done[d+"p"]; }
+
+  function render(){
+    var host = document.getElementById("weeks");
+    var html = "";
+    WEEKS.forEach(function(wk, wi){
+      html += '<div class="block"><div class="block-head">'
+        + '<span class="block-tag">'+wk.tag+'</span>'
+        + '<h2>'+wk.title+'</h2>'
+        + '<span class="block-sub">'+wk.range+'</span></div><div class="days">';
+      DAYS.filter(function(x){return x.w===wi;}).forEach(function(x){
+        var cardDone = dayComplete(x.d);
+        html += '<div class="day'+(cardDone?' done':'')+'" data-day="'+x.d+'">'
+          + '<div class="day-top">'
+          +   '<span class="day-num">'+(x.d<10?"0"+x.d:x.d)+'</span>'
+          +   '<span class="day-theme">'+x.theme+'</span>'
+          +   '<span class="day-badge">CLIMBED ✓</span>'
+          + '</div>'
+          + postRow(x.d, "a", "☀︎ Morning", x.am)
+          + postRow(x.d, "p", "☽ Afternoon", x.pm)
+          + '</div>';
+      });
+      html += '</div></div>';
+    });
+    host.innerHTML = html;
+  }
+
+  // ── Stats: ring, count, streak, motivation ──────────────────────────
+  function motivFor(pct){
+    if(pct===0)  return "Do Day 0 setup first, then ship Day 1. Tick as you go.";
+    if(pct<26)   return "Small small, e go add up. Two posts today — don't skip the spark.";
+    if(pct<51)   return "Momentum dey build. The replies are where the buyers hide.";
+    if(pct<76)   return "You don pass halfway — the paying users dey closer.";
+    if(pct<100)  return "Home stretch. Time to sell harder — you've earned it.";
+    return "60 posts done. Now go count your signups. 🏁";
+  }
+  function dayStreak(){ var s=0; for(var i=1;i<=30;i++){ if(dayComplete(i)) s++; else break; } return s; }
+
+  function updateStats(){
+    var posts=0; for(var i=1;i<=30;i++){ if(done[i+"a"]) posts++; if(done[i+"p"]) posts++; }
+    var fullDays=0; for(var j=1;j<=30;j++){ if(dayComplete(j)) fullDays++; }
+    var pct = Math.round(posts/TOTAL_POSTS*100);
+    document.getElementById("statDone").textContent = posts;
+    document.getElementById("statLeft").textContent = 30-fullDays;
+    document.getElementById("statStreak").textContent = dayStreak();
+    document.getElementById("ringPct").textContent = pct+"%";
+    var fill = document.getElementById("ringFill");
+    fill.style.strokeDashoffset = CIRC*(1-posts/TOTAL_POSTS);
+    fill.style.stroke = pct===100 ? "var(--green)" : "var(--primary)";
+    document.getElementById("motiv").textContent = motivFor(pct);
+    document.getElementById("allDone").classList.toggle("show", posts===TOTAL_POSTS);
+  }
+
+  // ── Toggle a post ───────────────────────────────────────────────────
+  document.getElementById("weeks").addEventListener("click", function(e){
+    var btn = e.target.closest(".prow"); if(!btn) return;
+    var id = btn.getAttribute("data-post");
+    if(done[id]) delete done[id]; else done[id]=true;
+    btn.classList.toggle("row-done", !!done[id]);
+    btn.setAttribute("aria-pressed", !!done[id]);
+    var card = btn.closest(".day");
+    var d = +card.getAttribute("data-day");
+    card.classList.toggle("done", dayComplete(d));
+    saveArr(STORE_KEY, Object.keys(done));
+    updateStats();
+  });
+
+  // ── Toggle a setup item ─────────────────────────────────────────────
+  document.getElementById("setup").addEventListener("click", function(e){
+    var btn = e.target.closest(".prow"); if(!btn) return;
+    var id = btn.getAttribute("data-set");
+    if(setupDone[id]) delete setupDone[id]; else setupDone[id]=true;
+    btn.classList.toggle("row-done", !!setupDone[id]);
+    btn.setAttribute("aria-pressed", !!setupDone[id]);
+    saveArr(SETUP_KEY, Object.keys(setupDone));
+  });
+
+  // ── Reset ───────────────────────────────────────────────────────────
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    if(!confirm("Reset everything? This clears Day 0 setup, all 60 post ticks and your streak.")) return;
+    done = {}; setupDone = {};
+    saveArr(STORE_KEY, []); saveArr(SETUP_KEY, []);
+    renderSetup(); render(); updateStats();
+  });
+
+  // ── Tabs ────────────────────────────────────────────────────────────
+  function setTab(name){
+    document.querySelectorAll(".tab").forEach(function(t){
+      var on = t.getAttribute("data-tab")===name;
+      t.classList.toggle("active", on); t.setAttribute("aria-selected", on);
+    });
+    document.getElementById("view-challenge").classList.toggle("hidden", name!=="challenge");
+    document.getElementById("view-playbook").classList.toggle("hidden", name!=="playbook");
+    document.getElementById("view-copy").classList.toggle("hidden", name!=="copy");
+    try{ localStorage.setItem(TAB_KEY, name); }catch(e){}
+    window.scrollTo(0,0);
+  }
+  document.querySelectorAll(".tab").forEach(function(t){
+    t.addEventListener("click", function(){ setTab(t.getAttribute("data-tab")); });
+  });
+
+  // ── Copy buttons (graceful if clipboard is blocked) ─────────────────
+  document.querySelectorAll(".post-copy").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var text = btn.closest(".post").querySelector(".post-body").innerText;
+      var ok = function(){ var o=btn.textContent; btn.textContent="Copied ✓"; setTimeout(function(){btn.textContent=o;},1400); };
+      try{
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(ok, function(){ btn.textContent="Select & copy"; });
+        } else { btn.textContent="Select & copy"; }
+      }catch(e){ btn.textContent="Select & copy"; }
+    });
+  });
+
+  // ── Theme toggle ────────────────────────────────────────────────────
+  (function(){
+    try{ var saved=localStorage.getItem(THEME_KEY); if(saved) document.documentElement.setAttribute("data-theme", saved); }catch(e){}
+    document.getElementById("themeToggle").addEventListener("click", function(){
+      var cur = document.documentElement.getAttribute("data-theme");
+      var next;
+      if(cur){ next = cur==="dark" ? "light" : "dark"; }
+      else { next = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "dark"; }
+      document.documentElement.setAttribute("data-theme", next);
+      try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
+    });
+  })();
+
+  // ── Init ────────────────────────────────────────────────────────────
+  (function(){
+    var startTab="challenge";
+    try{ var t=localStorage.getItem(TAB_KEY); if(t) startTab=t; }catch(e){}
+    renderSetup();
+    render();
+    updateStats();
+    setTab(startTab);
+  })();
+</script>
